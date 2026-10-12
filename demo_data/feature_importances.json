@@ -1,0 +1,46 @@
+{
+  "mif": [
+    {
+      "feature": "CD3+ / CD8+ spatial clustering",
+      "importance": 0.24
+    },
+    {
+      "feature": "PD-L1+ cell proportion",
+      "importance": 0.19
+    },
+    {
+      "feature": "iNOS+ cell proportion",
+      "importance": 0.15
+    },
+    {
+      "feature": "SOX10+ cell proportion",
+      "importance": 0.12
+    },
+    {
+      "feature": "CD8+ cell proportion",
+      "importance": 0.08
+    }
+  ],
+  "clinical": [
+    {
+      "feature": "LDH level",
+      "importance": 0.22
+    },
+    {
+      "feature": "Prior ipilimumab",
+      "importance": 0.17
+    },
+    {
+      "feature": "Metastatic stage",
+      "importance": 0.14
+    },
+    {
+      "feature": "Number of metastatic sites",
+      "importance": 0.11
+    },
+    {
+      "feature": "Age",
+      "importance": 0.06
+    }
+  ]
+}
