@@ -37,6 +37,8 @@ results/predictions/
 
 There is no automatic fallback from real outputs to synthetic data. A missing or invalid patient prediction file blocks the real-data view. Missing or invalid optional files leave their panels empty and appear in **Data readiness**. Files are reread on interaction and on reload; no result cache needs to be cleared.
 
+Switching data sources resets the patient selection to the first patient in that source.
+
 See [the data contract](docs/DATA_CONTRACT.md) for exact schemas and [Khai's handoff](docs/KHAI_HANDOFF.md) for integration steps and acceptance checks.
 
 ## Run on HPC

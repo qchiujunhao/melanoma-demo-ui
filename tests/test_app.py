@@ -32,6 +32,17 @@ def test_real_mode_missing_predictions_has_no_mock_results():
     assert len(app.metric) == 0
 
 
+def test_mode_switch_resets_patient_and_matching_scores():
+    app = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=20).run()
+    app.sidebar.selectbox[0].select("P03").run()
+    app.radio[0].set_value("Real model outputs").run()
+    app.radio[0].set_value("Synthetic demo").run()
+    assert not app.exception
+    assert app.sidebar.selectbox[0].value == "P01"
+    assert app.metric[0].value == "79.0%"
+    assert any("P01 · Predicted responder" == element.value for element in app.subheader)
+
+
 def test_real_mode_reads_outputs_without_optional_panels(tmp_path):
     shutil.copytree(ROOT / "src", tmp_path / "src")
     shutil.copytree(ROOT / "demo_data", tmp_path / "demo_data")

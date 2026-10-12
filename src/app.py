@@ -36,12 +36,18 @@ def chart(fig, key):
     st.plotly_chart(fig, width="stretch", key=key, config={"displayModeBar": False})
 
 
+def reset_patient():
+    # A mode transition replaces the dataset and may remove the patient widget.
+    for mode_name in ["Synthetic demo", "Real model outputs"]:
+        st.session_state.pop(f"patient_{mode_name}", None)
+
+
 with st.sidebar:
     st.markdown('<div class="eyebrow">MULTIMODAL ONCOLOGY</div>', unsafe_allow_html=True)
     st.title("Response explorer")
     st.caption("Precomputed model outputs, brought together for a research demonstration.")
     st.divider()
-    mode = st.radio("Data source", ["Synthetic demo", "Real model outputs"], key="source")
+    mode = st.radio("Data source", ["Synthetic demo", "Real model outputs"], key="source", on_change=reset_patient)
     st.button("Reload files", width="stretch", help="Read the current files again. No cached model results.")
 
 folder = ROOT / ("demo_data" if mode == "Synthetic demo" else "results/predictions")
