@@ -54,7 +54,7 @@ File: `narratives.json`
 }
 ```
 
-Paulo's integration produces the text; Khai connects the export to the UI. Keys must exactly match prediction IDs. Values must be non-empty strings. A subset of patients is allowed; a selected patient without text shows a waiting message. Unknown IDs invalidate the narrative file to surface mapping mistakes.
+Paulo's integration produces the text, which the UI reads from this file. Keys must exactly match prediction IDs. Values must be non-empty strings. A subset of patients is allowed; a selected patient without text shows a waiting message. Unknown IDs invalidate the narrative file to surface mapping mistakes.
 
 The UI displays plain text and does not invoke a model. Supply narratives grounded in the selected patient's actual model outputs and the approved input features. Do not replace missing narratives with synthetic patient-specific claims.
 

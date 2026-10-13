@@ -58,7 +58,7 @@ except ValueError as error:
     st.error(str(error))
     st.info("Start with patient_predictions.csv. Other panels can be added independently. Select Synthetic demo to preview the complete interface.")
     st.code("results/predictions/\n  patient_predictions.csv\n  feature_importances.json\n  narratives.json\n  tile_predictions.csv  # optional")
-    st.caption("See docs/DATA_CONTRACT.md and docs/KHAI_HANDOFF.md for the integration checklist.")
+    st.caption("See docs/DATA_CONTRACT.md for file schemas and validation rules.")
     st.stop()
 
 patients = bundle["patients"]
@@ -188,7 +188,7 @@ with readiness:
     st.dataframe(bundle["status"], hide_index=True, width="stretch")
     st.markdown("**Integration order**")
     st.markdown("1. Add patient predictions and confirm patient IDs.\n2. Add feature importance and pre-generated narratives.\n3. Add tile predictions if available.\n4. Select Real model outputs and reload files.")
-    st.caption("See docs/KHAI_HANDOFF.md for ownership and docs/DATA_CONTRACT.md for schemas. No training or NIM calls run inside this UI.")
+    st.caption("See docs/DATA_CONTRACT.md for file schemas and validation rules. No training or NIM calls run inside this UI.")
     with st.expander("Inspect patient-level scores"):
         columns = ["Patient_id", *MODELS] + (["actual_response"] if reveal else [])
         st.dataframe(patients[columns], hide_index=True, width="stretch")
