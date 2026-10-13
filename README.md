@@ -25,7 +25,7 @@ Try P01 for agreeing model scores, then P03 for conflicting scores. Toggle **Rev
 
 ## Connect real results
 
-Clone this repo into the environment where model outputs are available. Put the agreed files under `results/predictions/`, select **Real model outputs**, and click **Reload files**. Real files are kept local and are ignored by Git.
+Clone this repo into the environment where model outputs are available. Put the agreed files under `results/predictions/`, select **Local output files**, and click **Reload files**. Real files are kept local and are ignored by Git.
 
 ```text
 results/predictions/
@@ -40,6 +40,8 @@ There is no automatic fallback from real outputs to synthetic data. A missing or
 Switching data sources resets the patient selection to the first patient in that source.
 
 See [the data contract](docs/DATA_CONTRACT.md) for exact schemas and validation rules. Follow the integration order in the UI's **Data readiness** tab when connecting model outputs.
+
+The [verified mock copilot walkthrough](docs/MOCK_INTEGRATION.md) shows how to generate narratives with Paulo's project, export the matching files, and load them into this viewer.
 
 ## Run on HPC
 

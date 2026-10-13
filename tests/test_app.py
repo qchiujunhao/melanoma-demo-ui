@@ -24,9 +24,11 @@ def test_patient_switch_and_reveal():
     assert [metric.value for metric in app.metric] == before
 
 
-def test_real_mode_missing_predictions_has_no_mock_results():
-    app = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=20).run()
-    app.radio[0].set_value("Real model outputs").run()
+def test_real_mode_missing_predictions_has_no_mock_results(tmp_path):
+    shutil.copytree(ROOT / "src", tmp_path / "src")
+    shutil.copytree(ROOT / "demo_data", tmp_path / "demo_data")
+    app = AppTest.from_file(str(tmp_path / "src/app.py"), default_timeout=20).run()
+    app.radio[0].set_value("Local output files").run()
     assert not app.exception
     assert app.error and "missing" in app.error[0].value
     assert len(app.metric) == 0
@@ -35,7 +37,7 @@ def test_real_mode_missing_predictions_has_no_mock_results():
 def test_mode_switch_resets_patient_and_matching_scores():
     app = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=20).run()
     app.sidebar.selectbox[0].select("P03").run()
-    app.radio[0].set_value("Real model outputs").run()
+    app.radio[0].set_value("Local output files").run()
     app.radio[0].set_value("Synthetic demo").run()
     assert not app.exception
     assert app.sidebar.selectbox[0].value == "P01"
@@ -52,9 +54,11 @@ def test_real_mode_reads_outputs_without_optional_panels(tmp_path):
     (output / "feature_importances.json").unlink()
     (output / "tile_predictions.csv").unlink()
     app = AppTest.from_file(str(tmp_path / "src/app.py"), default_timeout=20).run()
-    app.radio[0].set_value("Real model outputs").run()
+    app.radio[0].set_value("Local output files").run()
     assert not app.exception and not app.error
     assert app.metric[0].value == "79.0%"
     assert any("No narrative" in element.value for element in app.info)
     assert any("No tile predictions" in element.value for element in app.info)
     assert not any("SYNTHETIC DEMO" in element.value for element in app.warning)
+    assert any("LOCAL OUTPUT FILES" in element.value for element in app.info)
+    assert not any("REAL MODEL OUTPUTS" in element.value for element in app.info)

@@ -38,7 +38,7 @@ def chart(fig, key):
 
 def reset_patient():
     # A mode transition replaces the dataset and may remove the patient widget.
-    for mode_name in ["Synthetic demo", "Real model outputs"]:
+    for mode_name in ["Synthetic demo", "Local output files"]:
         st.session_state.pop(f"patient_{mode_name}", None)
 
 
@@ -47,7 +47,7 @@ with st.sidebar:
     st.title("Response explorer")
     st.caption("Precomputed model outputs, brought together for a research demonstration.")
     st.divider()
-    mode = st.radio("Data source", ["Synthetic demo", "Real model outputs"], key="source", on_change=reset_patient)
+    mode = st.radio("Data source", ["Synthetic demo", "Local output files"], key="source", on_change=reset_patient)
     st.button("Reload files", width="stretch", help="Read the current files again. No cached model results.")
 
 folder = ROOT / ("demo_data" if mode == "Synthetic demo" else "results/predictions")
@@ -80,7 +80,7 @@ st.caption("Explore spatial multiplex immunofluorescence (mIF), clinical feature
 if synthetic:
     st.warning("SYNTHETIC DEMO · All patient IDs, scores, heatmaps, importance values, and narratives are invented. These are not study results.", icon="🧪")
 else:
-    st.info("REAL MODEL OUTPUTS · Loaded from local files. Predictions and narratives are research outputs for this demonstration.", icon="📂")
+    st.info("LOCAL OUTPUT FILES · Precomputed scores and narratives. Check the narrative source before presenting these as model-generated results.", icon="📂")
 
 predicted = "Responder" if row["prob_fused"] >= .5 else "Non-responder"
 label_col, count_col = st.columns([3, 1])
@@ -124,7 +124,7 @@ with overview:
         st.caption("Importance scales depend on the producer's method and should not be compared across modalities without that context.")
     with narrative_col, st.container(border=True):
         st.subheader("Clinical narrative")
-        st.caption("Synthetic example" if synthetic else "Pre-generated text from the Nemotron integration")
+        st.caption("Synthetic example" if synthetic else "Pre-generated narrative · source identified in the supplied text")
         narrative = bundle["narratives"].get(patient)
         if narrative:
             st.text(narrative)
@@ -187,7 +187,7 @@ with readiness:
     st.caption("Synthetic fixture files" if synthetic else "Local model output files · results/predictions/")
     st.dataframe(bundle["status"], hide_index=True, width="stretch")
     st.markdown("**Integration order**")
-    st.markdown("1. Add patient predictions and confirm patient IDs.\n2. Add feature importance and pre-generated narratives.\n3. Add tile predictions if available.\n4. Select Real model outputs and reload files.")
+    st.markdown("1. Add patient predictions and confirm patient IDs.\n2. Add feature importance and pre-generated narratives.\n3. Add tile predictions if available.\n4. Select Local output files and reload files.")
     st.caption("See docs/DATA_CONTRACT.md for file schemas and validation rules. No training or NIM calls run inside this UI.")
     with st.expander("Inspect patient-level scores"):
         columns = ["Patient_id", *MODELS] + (["actual_response"] if reveal else [])
